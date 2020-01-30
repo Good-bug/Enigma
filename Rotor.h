@@ -15,22 +15,42 @@
 //along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //Copyright (C) 2020 Rabii Ovidiu Cristian
 
-#ifndef ENIGMA_ROTER_H
-#define ENIGMA_ROTER_H
+#ifndef ENIGMA_ROTOR_H
+#define ENIGMA_ROTOR_H
 
 #include <vector>
 #include <map>
 
-class Roter {
+class Rotor {
 public:
-    Roter() = delete;
-    Roter(std::vector<std::pair<int,std::string>> roter);
+    Rotor();
+    Rotor(std::vector<char> roter);
+    Rotor(std::string);
 
+
+    void rotate(){
+        if(m_position < alphabet_size)
+            ++m_position;
+        else
+            m_position = 0;
+    }
+    void setPosition(int);
+    void setPosition(char);
+    char current();
+    char cript(char);
 
 private:
-    std::vector<std::pair<int, std::string>> m_roter;
+    std::vector<char> m_rotor;
+    int m_position;
+
+    int find(int);
+    int find(char);
+    int toOrder(char);
+    int alphabet_size = 26;
+
+
 
 };
 
 
-#endif //ENIGMA_ROTER_H
+#endif //ENIGMA_ROTOR_H
