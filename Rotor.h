@@ -28,9 +28,9 @@ public:
     Rotor(std::string);
 
 
-    void rotate(){
+    void rotate(int step = 1){
         if(m_position < alphabet_size)
-            ++m_position;
+            m_position += step;
         else
             m_position = 0;
     }
@@ -38,18 +38,19 @@ public:
     void setPosition(char);
     char current();
     char cript(char);
+    int getAlbhabetSize(){return alphabet_size;};
+    void setAlphabetSize(int size){alphabet_size = size;};
 
 private:
     std::vector<char> m_rotor;
-    int m_position;
 
     int find(int);
     int find(char);
-    int toOrder(char);
+    int m_position;
     int alphabet_size = 26;
 
-
-
+protected:
+    int toOrder(char);
 };
 
 

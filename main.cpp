@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Rotor.h"
+#include "Reflector.h"
 //reflector AY BR CU DH EQ FS GL IP JX KN MO TZ VW
 
 int main() {
@@ -9,6 +10,7 @@ int main() {
         Rotor rot(std::string("EKMFLGDQVZNTOWYHXUSPAIBRCJ"));
         Rotor rot1(std::string("AJDKSIRUXBLHWTMCQGZNPYFVOE"));
         Rotor rot2(std::string("BDFHJLCPRTXVZNYEIWGAKMUSQO"));
+        Reflector ref(std::string("AY BR CU DH EQ FS GL IP JX KN MO TZ VW"));
     } catch (std::string ex){
         std::cout << ex;
         return 0;
