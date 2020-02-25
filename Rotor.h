@@ -36,21 +36,23 @@ public:
     }
     void setPosition(int);
     void setPosition(char);
+    int getPosition();
     char current();
     char cript(char);
     int getAlbhabetSize(){return alphabet_size;};
     void setAlphabetSize(int size){alphabet_size = size;};
+    void print();
 
 private:
-    std::vector<char> m_rotor;
-
     int find(int);
     int find(char);
-    int m_position;
+
+    int m_position{0};
     int alphabet_size = 26;
 
 protected:
     int toOrder(char);
+    std::vector<char> m_rotor;
 };
 
 

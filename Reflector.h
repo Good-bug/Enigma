@@ -11,12 +11,12 @@
 class Reflector : public Rotor {
 public:
     Reflector();
+    Reflector(std::string);
 
     void rotate() = delete;
     void setPosition(int) = delete;
     void setPosition(char) = delete;
 
-    Reflector(std::string);
 
 private:
     std::vector<char> m_reflector;

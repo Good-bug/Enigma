@@ -24,7 +24,7 @@ Rotor::Rotor(std::string alphabet) {
 
     for(int i = 0; i < alphabet_size; ++i){
         if(!isalpha(alphabet[i]))
-            throw std::string("ERROR: Rotor(string) constructor. Not valid alphabet chara " + alphabet + "\".");
+            throw std::string("ERROR: Rotor(string) constructor. Not valid alphabet chara in \"" + alphabet + "\" at \"" + alphabet[i] + "\".");
         m_rotor.push_back(tolower(alphabet[i]));
     }
 }
@@ -51,6 +51,19 @@ void Rotor::setPosition(int p) {
 void Rotor::setPosition(char p) {
     m_position = toOrder(p);
 }
+
 char Rotor::current() {
     return m_rotor.at(m_position);
+}
+
+int Rotor::getPosition(){
+    return  m_position;
+}
+
+void Rotor::print() {
+    std::string str = "";
+    for(auto const& ch : m_rotor){
+        str += ch;
+    }
+//    std::cout << str << std::endl;
 }
