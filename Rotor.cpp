@@ -29,14 +29,16 @@ Rotor::Rotor(std::string alphabet) {
     }
 }
 
-char Rotor::cript(char imput) {
+char Rotor::cript(char imput, int prev) {
     if(!isalpha(imput))
         return imput;
-
+    int position = (toOrder(imput) + (m_position - prev))%(alphabet_size);
+    position = position < 0 ? alphabet_size + position : position;
+    std::cout << position;
     if(isupper(imput))
-        return toupper(m_rotor.at(((m_position) + toOrder(imput))%(alphabet_size)));
+        return toupper(m_rotor.at(position));
     else
-        return m_rotor.at(((m_position) + toOrder(imput))%(alphabet_size));
+        return m_rotor.at(position);
 
 }
 

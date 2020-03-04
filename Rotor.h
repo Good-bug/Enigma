@@ -38,7 +38,7 @@ public:
     void setPosition(char);
     int getPosition();
     char current();
-    char cript(char);
+    char cript(char, int);
     int getAlbhabetSize(){return alphabet_size;};
     void setAlphabetSize(int size){alphabet_size = size;};
     void print();
