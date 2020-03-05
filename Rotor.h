@@ -39,9 +39,14 @@ public:
     int getPosition();
     char current();
     char cript(char, int);
+    char bcript(char, int);
     int getAlbhabetSize(){return alphabet_size;};
     void setAlphabetSize(int size){alphabet_size = size;};
     void print();
+    static int toOrder(char);
+    bool operator==(Rotor &left){
+        return m_rotor == left.m_rotor;
+    }
 
 private:
     int find(int);
@@ -51,7 +56,6 @@ private:
     int alphabet_size = 26;
 
 protected:
-    int toOrder(char);
     std::vector<char> m_rotor;
 };
 

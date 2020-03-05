@@ -4,6 +4,7 @@
 
 #include "Rotor.h"
 
+#include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
@@ -29,16 +30,28 @@ Rotor::Rotor(std::string alphabet) {
     }
 }
 
-char Rotor::cript(char imput, int prev) {
-    if(!isalpha(imput))
-        return imput;
-    int position = (toOrder(imput) + (m_position - prev))%(alphabet_size);
+char Rotor::cript(char input, int algoritm) {
+    if(!isalpha(input))
+        return input;
+
+    int position = (toOrder(input) + algoritm)%(alphabet_size);
     position = position < 0 ? alphabet_size + position : position;
-    std::cout << position;
-    if(isupper(imput))
-        return toupper(m_rotor.at(position));
-    else
-        return m_rotor.at(position);
+
+    return m_rotor.at(position);
+
+}
+
+char Rotor::bcript(char input, int algoritm) {
+    if(!isalpha(input))
+        return input;
+
+    int position = (toOrder(input) - algoritm)%(alphabet_size);
+    position = position < 0 ? alphabet_size + position : position;
+
+    auto const& it = std::find(m_rotor.begin(), m_rotor.end(), position + 'a');
+
+    char enc = std::distance(m_rotor.begin(), it) + 'a';
+    return enc;
 
 }
 
