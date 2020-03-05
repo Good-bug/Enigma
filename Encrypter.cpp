@@ -20,48 +20,64 @@ Encrypter::Encrypter(std::vector<std::string> rotors, std::string reflector) : m
 
 }
 
-char Encrypter::encrypt(char c) {
-//    for(int i = 0; i < m_rotors.size(); ++i)
-//        std::cout << "position " << i << ": " << m_rotors[i].getPosition() << ";\t";
-//    std::cout << std::endl;
-    m_rotors[0].setPosition('r');
-    m_rotors[1].setPosition('v');
-    m_rotors[2].setPosition('c');
-
-    std::cout << m_rotors[0].getPosition() << "\t";
-    std::cout << m_rotors[1].getPosition() << "\t";
-    std::cout << m_rotors[2].getPosition() << std::endl;
-
-
+char Encrypter::encrypt(char k) {
+    char c = std::tolower(k);
 
     int pos = 0;
     for(auto& r : m_rotors){
-        std::cout << c << " --> ";
-
-        c = r.cript(c, pos);
+        c = r.cript(c, forward(pos, r.getPosition()));
         pos = r.getPosition();
     }
-    std::cout << c << std::endl;
 
-    c = m_reflector.cript(c, pos);
-
-    std::string back = "";
+    c = m_reflector.cript(c, -pos);
 
     pos = 0;
     for(auto& r : boost::adaptors::reverse(m_rotors)){
-        back = (" <-- " + std::string(1, c)) + back;
-        c = r.cript(c, (r.getPosition() + pos));
+        c = r.bcript(c, backward(pos, r.getPosition()));
+        pos = r.getPosition();
     }
-    back = std::string(1, c) + back;
-    std::cout << back << std::endl;
 
     bool pas = true;
     for(auto& r : m_rotors){
         if(pas){
             pas = r.getPosition() == r.getAlbhabetSize();
             r.rotate();
+            if(r == m_rotors.at(1) && r.getPosition() == (r.getAlbhabetSize() - 1)) {
+                r.rotate();
+            }
         }
     }
 
-    return c;
+    char tmp = c - pos;
+    tmp = tmp < 'a' ? tmp + (m_reflector.getAlbhabetSize()) : tmp;
+
+    return std::islower(k) ? tmp : std::toupper(tmp);
+}
+
+int Encrypter::forward(int pos, int curent) {
+    return (curent - pos);
+}
+
+int Encrypter::backward(int pos, int curent) {
+    return (pos - curent);
+}
+
+void Encrypter::setPosition(std::string pos) {
+    if(pos.size() != m_rotors.size()){
+        throw std::string("ERROR: Encrypter::setPosition(std::string) -> string size " + std::to_string(pos.size()) + ", differs from rotors count " + std::to_string(m_rotors.size()));
+    }
+
+    for(int i = 0; i < m_rotors.size(); ++i){
+        m_rotors.at(i).setPosition(pos[i]);
+    }
+}
+
+void Encrypter::setPosition(std::vector<int> pos) {
+    if(pos.size() != m_rotors.size()){
+        throw std::string("ERROR: Encrypter::setPosition(std::vector<int>) -> string size " + std::to_string(pos.size()) + ", differs from rotors count " + std::to_string(m_rotors.size()));
+    }
+
+    for(int i = 0; i < m_rotors.size(); ++i){
+        m_rotors.at(i).setPosition(pos[i]);
+    }
 }

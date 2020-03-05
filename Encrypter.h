@@ -14,9 +14,16 @@ class Encrypter {
 public:
     Encrypter();
     Encrypter(std::vector<std::string> rotors, std::string reflector);
+
+    int forward(int pos, int curent);
+    int backward(int pos, int curent);
     char encrypt(char);
+
     void push_back_rotor(std::string t);
     void push_back_rotor(Rotor r);
+
+    void setPosition(std::string);
+    void setPosition(std::vector<int>);
 
 private:
     std::vector<Rotor> m_rotors;
