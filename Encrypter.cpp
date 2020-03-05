@@ -21,6 +21,9 @@ Encrypter::Encrypter(std::vector<std::string> rotors, std::string reflector) : m
 }
 
 char Encrypter::encrypt(char k) {
+    if(!isalpha(k))
+        return k;
+
     char c = std::tolower(k);
 
     int pos = 0;
