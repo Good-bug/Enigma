@@ -3,9 +3,12 @@
 #include "Rotor.h"
 #include "Reflector.h"
 #include "Encrypter.h"
+
+#include "mainwindow.h"
+#include <QApplication>
 //reflector AY BR CU DH EQ FS GL IP JX KN MO TZ VW
 
-int main() {
+int main(int argc, char *argv[]) {
     std::cout << "Hello, World!" << std::endl;
     std::vector<std::string> str_rotor;
 
@@ -20,18 +23,21 @@ int main() {
     }
     Reflector ref(std::string("AY BR CU DH EQ FS GL IP JX KN MO TZ VW"));
 
-    Encrypter en(str_rotor, std::string("AY BR CU DH EQ FS GL IP JX KN MO TZ VW"));
-    en.setPosition("rvc");
 
-    for(int i = 0; i < 1000; ++i){
-        std::cout << en.encrypt('a')/* << std::endl*/;
-    }
-    std::cout << en.encrypt('A') << std::endl;
+//    Encrypter en(str_rotor, std::string("AY BR CU DH EQ FS GL IP JX KN MO TZ VW"));
+//    for(int i = 0; i < 1; ++i){
+//        std::cout << en.encrypt('a');
+//    }
+//    std::cout << en.encrypt('a') << std::endl;
 
-    Rotor rot(std::string("EKMFLGDQVZNTOWYHXUSPAIBRCJ"));
-//    rot.setPosition('r');
-//    std::cout << rot.cript('a', 0);
+//    Rotor rot(std::string("EKMFLGDQVZNTOWYHXUSPAIBRCJ"));
+////    rot.setPosition('r');
+////    std::cout << rot.cript('a', 0);
 //    std::cout << ref.cript('m', 2) << std::endl;
 
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+
+    return a.exec();
 }
