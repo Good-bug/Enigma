@@ -12,11 +12,20 @@
 
 class Encrypter {
 public:
-    Encrypter();
-    Encrypter(std::vector<std::string> rotors, std::string reflector);
+//    Encrypter() = delete;
+    Encrypter(std::vector<std::string> &rotors, std::string &reflector);
     char encrypt(char);
-    void push_back_rotor(std::string t);
-    void push_back_rotor(Rotor r);
+    void pushBackRotor(std::string t);
+    void pushBackRotor(Rotor r);
+    void rotate(int);
+    void rotateBack(int);
+
+    void rotate();
+    void rotateBack();
+    char getChar(int);
+    void print(){
+        std::cout << m_rotors.at(0).current() << std::endl;
+    }
 
 private:
     std::vector<Rotor> m_rotors;
