@@ -5,24 +5,82 @@
 #include "Encrypter.h"
 #include <boost/range/adaptor/reversed.hpp>
 
-Encrypter::Encrypter() {
-
-}
-
-Encrypter::Encrypter(std::vector<std::string> rotors, std::string reflector) : m_reflector(reflector) {
-    for(auto const& str : rotors){
-        m_rotors.push_back(Rotor(str));
-    }
+Encrypter::Encrypter(std::vector<std::string> &rotors, std::string &reflector) : m_reflector(reflector) {
+    if(rotors.size() == 3)
+        for(auto const& str : rotors){
+            m_rotors.push_back(Rotor(str));
+        }
 
     for(auto& r : m_rotors){
         r.print();
     }
+    m_rotors.at(1).setMid(true);
 
+}
+
+void Encrypter::rotate(int roter){
+    if(roter < 0 || roter > m_rotors.size()){
+        return;
+    }
+
+    m_rotors.at(roter).rotate();
+}
+
+void Encrypter::rotateBack(int roter){
+    if(roter < 0 || roter > m_rotors.size()){
+        return;
+    }
+
+    m_rotors.at(roter).rotateBack();
+}
+
+void Encrypter::rotate()
+{
+    bool pas = true;
+    for(auto& r : m_rotors)
+        if(pas){
+            pas = r.getPosition() == r.getAlbhabetSize() - 1;
+
+            if(r.isMid()) {
+                pas = r.getPosition() == r.getAlbhabetSize() - 2;
+            }
+            r.rotate();
+        }
+}
+
+void Encrypter::rotateBack()
+{
+
+    bool pas = true;
+    for(auto& r : m_rotors)
+        if(pas){
+            pas = r.getPosition() == r.getAlbhabetSize() - 1;
+
+            if(r.isMid()) {
+                pas = r.getPosition() == r.getAlbhabetSize() - 2;
+            }
+            r.rotateBack();
+        }
+}
+
+char Encrypter::getChar(int roter)
+{
+    return m_rotors.at(roter).current();
 }
 
 char Encrypter::encrypt(char k) {
     if(!isalpha(k))
         return k;
+
+    m_rotors[0].setPosition('r');
+    m_rotors[1].setPosition('v');
+    m_rotors[2].setPosition('c');
+
+
+    std::cout << m_rotors[0].getPosition() << "\t";
+    std::cout << m_rotors[1].getPosition() << "\t";
+    std::cout << m_rotors[2].getPosition() << std::endl;
+
 
     char c = std::tolower(k);
 
@@ -33,6 +91,22 @@ char Encrypter::encrypt(char k) {
     }
 
     c = m_reflector.cript(c, -pos);
+
+    auto back_get =[&](Rotor& r, auto const& tmp_c){
+        char tmp;
+
+        auto old_pos = r.getPosition();
+        r.setPosition(tmp_c);
+
+        if(std::isupper(c))
+            tmp = (int)(r.getPosition() + 'A');
+        else
+            tmp = (int)(r.getPosition() + 'a');
+
+        r.setPosition(old_pos);
+
+        return tmp;
+    };
 
     pos = 0;
     for(auto& r : boost::adaptors::reverse(m_rotors)){

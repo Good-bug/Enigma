@@ -29,24 +29,44 @@ public:
 
 
     void rotate(int step = 1){
-        if(m_position < alphabet_size)
+        if(m_position < m_rotor.size() - 1){
             m_position += step;
-        else
+            if(m_mid && m_position == m_rotor.size() - 1)
+                rotate();
+        }  else {
             m_position = 0;
+        }
     }
+
+    void rotateBack(int step = 1){
+        if(m_position > 0) {
+            m_position -= step;
+            if(m_mid && m_position == m_rotor.size() - 1)
+                rotate();
+        } else {
+            m_position = m_rotor.size() - 1;
+        }
+    }
+
     void setPosition(int);
     void setPosition(char);
     int getPosition();
+
     char current();
     char cript(char, int);
     char bcript(char, int);
+
     int getAlbhabetSize(){return alphabet_size;};
     void setAlphabetSize(int size){alphabet_size = size;};
+
     void print();
     static int toOrder(char);
     bool operator==(Rotor &left){
         return m_rotor == left.m_rotor;
     }
+
+    void setMid(bool mid) {m_mid = mid;};
+    bool isMid() { return m_mid;}
 
 private:
     int find(int);
@@ -54,6 +74,8 @@ private:
 
     int m_position{0};
     int alphabet_size = 26;
+
+    bool m_mid{false};
 
 protected:
     std::vector<char> m_rotor;
