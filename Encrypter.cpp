@@ -109,10 +109,19 @@ char Encrypter::encrypt(char k) {
     };
 
     pos = 0;
-    for(auto& r : boost::adaptors::reverse(m_rotors)){
-        c = r.bcript(c, backward(pos, r.getPosition()));
-        pos = r.getPosition();
-    }
+    std::string back;
+//    for(auto& r : boost::adaptors::reverse(m_rotors)){
+    back = (" <-- " + std::string(1, c)) + back;
+    c = m_rotors[2].getBack(m_rotors[2].cript(c, (/*r.getPosition() + */pos)));
+    pos = m_rotors[2].getPosition();
+//    }
+
+    back = (" <-- " + std::string(1, c)) + back;
+    c =m_rotors[1].getBack(m_rotors[1].cript(c, (m_rotors[1].getPosition() + /**/pos)));
+    pos = m_rotors[1].getPosition();
+
+    back = (" <-- " + std::string(1, c)) + back;
+    c = m_rotors[0].getBack(m_rotors[0].cript(c, (m_rotors[2].getPosition() + /**/pos)));
 
     bool pas = true;
     for(auto& r : m_rotors){

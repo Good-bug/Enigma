@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
+#include <algorithm>
 
 Rotor::Rotor() {
     m_position = 0;
@@ -82,3 +83,26 @@ void Rotor::print() {
     }
 //    std::cout << str << std::endl;
 }
+
+char Rotor::getBack(char const& tmp_c){
+        char tmp;
+
+        auto it = std::find_if(m_rotor.begin(), m_rotor.end(), [&tmp_c](auto const& c){return c == tmp_c;});
+
+        if(std::isupper(tmp_c))
+            tmp = std::distance(m_rotor.begin(), it) + 'A';
+        else
+            tmp = std::distance(m_rotor.begin(), it) + 'a';
+
+//        auto old_pos = r.getPosition();
+//        r.setPosition(tmp_c);
+
+//        if(std::isupper(c))
+//            tmp = (int)(r.getPosition() + 'A');
+//        else
+//            tmp = (int)(r.getPosition() + 'a');
+
+//        r.setPosition(old_pos);
+
+        return tmp;
+    };

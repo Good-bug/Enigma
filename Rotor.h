@@ -68,6 +68,8 @@ public:
     void setMid(bool mid) {m_mid = mid;};
     bool isMid() { return m_mid;}
 
+    char getBack(char const&);
+
 private:
     int find(int);
     int find(char);
