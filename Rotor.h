@@ -28,33 +28,16 @@ public:
     Rotor(std::string);
 
 
-    void rotate(int step = 1){
-        if(m_position < m_rotor.size() - 1){
-            m_position += step;
-            if(m_mid && m_position == m_rotor.size() - 1)
-                rotate();
-        }  else {
-            m_position = 0;
-        }
-    }
-
-    void rotateBack(int step = 1){
-        if(m_position > 0) {
-            m_position -= step;
-            if(m_mid && m_position == m_rotor.size() - 1)
-                rotate();
-        } else {
-            m_position = m_rotor.size() - 1;
-        }
-    }
+    void rotate(int step = 1);
+    void rotateBack(int step = 1);
 
     void setPosition(int);
     void setPosition(char);
     int getPosition();
 
     char current();
-    char cript(char, int);
-    char bcript(char, int);
+    char cript(int, int);
+    char bcript(int, int);
 
     int getAlbhabetSize(){return alphabet_size;};
     void setAlphabetSize(int size){alphabet_size = size;};
@@ -74,12 +57,12 @@ private:
     int find(int);
     int find(char);
 
-    int m_position{0};
     int alphabet_size = 26;
 
     bool m_mid{false};
 
 protected:
+    int m_position{0};
     std::vector<char> m_rotor;
 };
 

@@ -13,6 +13,9 @@ public:
     Reflector();
     Reflector(std::string);
 
+    //char cript(int);
+
+//    char cript(int, int) = delete;
     void rotate() = delete;
     void setPosition(int) = delete;
     void setPosition(char) = delete;

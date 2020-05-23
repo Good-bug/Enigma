@@ -72,25 +72,27 @@ char Encrypter::encrypt(char k) {
     if(!isalpha(k))
         return k;
 
-    m_rotors[0].setPosition('r');
-    m_rotors[1].setPosition('v');
-    m_rotors[2].setPosition('c');
+//    m_rotors[0].setPosition('r');
+//    m_rotors[1].setPosition('v');
+//    m_rotors[2].setPosition('c');
 
 
-    std::cout << m_rotors[0].getPosition() << "\t";
-    std::cout << m_rotors[1].getPosition() << "\t";
-    std::cout << m_rotors[2].getPosition() << std::endl;
+    std::cout << Rotor::toOrder(m_rotors[0].current()) << "\t";
+    std::cout << Rotor::toOrder(m_rotors[1].current()) << "\t";
+    std::cout << Rotor::toOrder(m_rotors[2].current()) << std::endl;
 
 
     char c = std::tolower(k);
 
     int pos = 0;
     for(auto& r : m_rotors){
-        c = r.cript(c, forward(pos, r.getPosition()));
-        pos = r.getPosition();
+        std::cout << c << " --> ";
+        c = r.cript(Rotor::toOrder(c), pos);
+        pos = Rotor::toOrder(r.current());
     }
+    std::cout << c << std::endl;
 
-    c = m_reflector.cript(c, -pos);
+    c = m_reflector.bcript(Rotor::toOrder(c), pos);
 
     auto back_get =[&](Rotor& r, auto const& tmp_c){
         char tmp;
@@ -112,40 +114,27 @@ char Encrypter::encrypt(char k) {
     std::string back;
 //    for(auto& r : boost::adaptors::reverse(m_rotors)){
     back = (" <-- " + std::string(1, c)) + back;
-    c = m_rotors[2].getBack(m_rotors[2].cript(c, (/*r.getPosition() + */pos)));
-    pos = m_rotors[2].getPosition();
+    c = /*m_rotors[2].getBack(*/m_rotors[2].bcript((Rotor::toOrder(c)), (/*r.getPosition() + */pos));
+    pos = Rotor::toOrder(m_rotors[2].current());
 //    }
 
     back = (" <-- " + std::string(1, c)) + back;
-    c =m_rotors[1].getBack(m_rotors[1].cript(c, (m_rotors[1].getPosition() + /**/pos)));
-    pos = m_rotors[1].getPosition();
+    c = /*m_rotors[1].getBack(*/m_rotors[1].bcript((Rotor::toOrder(c)), pos);
+    pos = Rotor::toOrder(m_rotors[1].current());
 
     back = (" <-- " + std::string(1, c)) + back;
-    c = m_rotors[0].getBack(m_rotors[0].cript(c, (m_rotors[2].getPosition() + /**/pos)));
+    c = /*m_rotors[0].getBack(*/m_rotors[0].bcript((Rotor::toOrder(c)), pos);
+    pos = Rotor::toOrder(m_rotors[0].current());
 
-    bool pas = true;
-    for(auto& r : m_rotors){
-        if(pas){
-            pas = r.getPosition() == r.getAlbhabetSize();
-            r.rotate();
-            if(r == m_rotors.at(1) && r.getPosition() == (r.getAlbhabetSize() - 1)) {
-                r.rotate();
-            }
-        }
-    }
+    back = std::string(1, c) + back;
+    std::cout << back << std::endl;
+
+    rotate();
 
     char tmp = c - pos;
     tmp = tmp < 'a' ? tmp + (m_reflector.getAlbhabetSize()) : tmp;
 
     return std::islower(k) ? tmp : std::toupper(tmp);
-}
-
-int Encrypter::forward(int pos, int curent) {
-    return (curent - pos);
-}
-
-int Encrypter::backward(int pos, int curent) {
-    return (pos - curent);
 }
 
 void Encrypter::setPosition(std::string pos) {

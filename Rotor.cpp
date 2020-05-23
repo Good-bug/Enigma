@@ -31,25 +31,24 @@ Rotor::Rotor(std::string alphabet) {
     }
 }
 
-char Rotor::cript(char input, int algoritm) {
-    if(!isalpha(input))
-        return input;
+char Rotor::cript(int input, int prev_pos) {
 
-    int position = (toOrder(input) + algoritm)%(alphabet_size);
+    int curr = toOrder(current());
+    int position = (input + (curr /**/- prev_pos))%(alphabet_size);
     position = position < 0 ? alphabet_size + position : position;
 
     return m_rotor.at(position);
 
 }
 
-char Rotor::bcript(char input, int algoritm) {
-    if(!isalpha(input))
-        return input;
+char Rotor::bcript(int input, int prev_pos) {
+    int curr = toOrder(current());
 
-    int position = (toOrder(input) - algoritm)%(alphabet_size);
+    int position = (input - (prev_pos - curr))%(alphabet_size);
     position = position < 0 ? alphabet_size + position : position;
 
-    auto const& it = std::find(m_rotor.begin(), m_rotor.end(), position + 'a');
+    char val = position + 'a';
+    auto const& it = std::find(m_rotor.begin(), m_rotor.end(), val/*input + 'a'*/);
 
     char enc = std::distance(m_rotor.begin(), it) + 'a';
     return enc;
@@ -65,7 +64,9 @@ void Rotor::setPosition(int p) {
 }
 
 void Rotor::setPosition(char p) {
-    m_position = toOrder(p);
+
+    auto it = std::find_if(m_rotor.begin(), m_rotor.end(), [&p](auto const& c){return c == p;});
+    m_position = std::distance(m_rotor.begin(), it);
 }
 
 char Rotor::current() {
@@ -106,3 +107,42 @@ char Rotor::getBack(char const& tmp_c){
 
         return tmp;
     };
+
+void Rotor::rotate(int step){
+//        if(m_position < m_rotor.size() - 1){
+//            m_position += step;
+//            if(m_mid && m_position == m_rotor.size() - 1)
+//                rotate();
+//        }  else {
+//            m_position = 0;
+//        }
+    auto const pos = (toOrder(current()) + step) % alphabet_size;
+    auto const& it = std::find(m_rotor.begin(), m_rotor.end(), pos +'a');
+
+    char enc = std::distance(m_rotor.begin(), it);
+    m_position = enc;
+//        if(m_mid){
+//        } else
+//            m_position = (toOrder(current()) + step) % alphabet_size;
+
+}
+
+void Rotor::rotateBack(int step){
+//    if(m_position > 0) {
+//        m_position -= step;
+//        if(m_mid && m_position == m_rotor.size() - 1)
+//            rotate();
+//    } else {
+//        m_position = m_rotor.size() - 1;
+//    }
+
+
+    auto pos = (toOrder(current()) - step);
+    if(pos < 0)
+        pos += alphabet_size;
+
+    auto const& it = std::find(m_rotor.begin(), m_rotor.end(), pos + 'a');
+
+    int enc = std::distance(m_rotor.begin(), it);
+    m_position = enc;
+}

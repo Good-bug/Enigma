@@ -12,8 +12,6 @@
 
 class Encrypter {
 public:
-    int forward(int pos, int curent);
-    int backward(int pos, int curent);
     char encrypt(char);
 
     void push_back_rotor(std::string t);
