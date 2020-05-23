@@ -18,19 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
         std::cout << ex;
     }
 
-//    Reflector ref(std::string("AY BR CU DH EQ FS GL IP JX KN MO TZ VW"));
     std::string refl("AY BR CU DH EQ FS GL IP JX KN MO TZ VW");
     en = new Encrypter(str_rotor, refl);
-//    for(auto const& position : )
 
-    en->print();
     ui->setupUi(this);
-//    QObject::connect(&a, &Counter::valueChanged,
-//                         &b, &Counter::setValue);
-
-
-//    en->setPosition("rvc");
-     en->setPosition("aaa");
+    en->setPosition("aaa");
 
 
     ui->label_2->setText(QString(en->getChar(0)).toUpper());

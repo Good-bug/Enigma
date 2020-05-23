@@ -82,61 +82,18 @@ void Rotor::print() {
     for(auto const& ch : m_rotor){
         str += ch;
     }
-//    std::cout << str << std::endl;
 }
 
-char Rotor::getBack(char const& tmp_c){
-        char tmp;
-
-        auto it = std::find_if(m_rotor.begin(), m_rotor.end(), [&tmp_c](auto const& c){return c == tmp_c;});
-
-        if(std::isupper(tmp_c))
-            tmp = std::distance(m_rotor.begin(), it) + 'A';
-        else
-            tmp = std::distance(m_rotor.begin(), it) + 'a';
-
-//        auto old_pos = r.getPosition();
-//        r.setPosition(tmp_c);
-
-//        if(std::isupper(c))
-//            tmp = (int)(r.getPosition() + 'A');
-//        else
-//            tmp = (int)(r.getPosition() + 'a');
-
-//        r.setPosition(old_pos);
-
-        return tmp;
-    };
-
 void Rotor::rotate(int step){
-//        if(m_position < m_rotor.size() - 1){
-//            m_position += step;
-//            if(m_mid && m_position == m_rotor.size() - 1)
-//                rotate();
-//        }  else {
-//            m_position = 0;
-//        }
     auto const pos = (toOrder(current()) + step) % alphabet_size;
     auto const& it = std::find(m_rotor.begin(), m_rotor.end(), pos +'a');
 
     char enc = std::distance(m_rotor.begin(), it);
     m_position = enc;
-//        if(m_mid){
-//        } else
-//            m_position = (toOrder(current()) + step) % alphabet_size;
 
 }
 
 void Rotor::rotateBack(int step){
-//    if(m_position > 0) {
-//        m_position -= step;
-//        if(m_mid && m_position == m_rotor.size() - 1)
-//            rotate();
-//    } else {
-//        m_position = m_rotor.size() - 1;
-//    }
-
-
     auto pos = (toOrder(current()) - step);
     if(pos < 0)
         pos += alphabet_size;

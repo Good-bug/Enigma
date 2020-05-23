@@ -72,10 +72,6 @@ char Encrypter::encrypt(char k) {
     if(!isalpha(k))
         return k;
 
-//    m_rotors[0].setPosition('r');
-//    m_rotors[1].setPosition('v');
-//    m_rotors[2].setPosition('c');
-
 
     std::cout << Rotor::toOrder(m_rotors[0].current()) << "\t";
     std::cout << Rotor::toOrder(m_rotors[1].current()) << "\t";
@@ -112,18 +108,16 @@ char Encrypter::encrypt(char k) {
 
     pos = 0;
     std::string back;
-//    for(auto& r : boost::adaptors::reverse(m_rotors)){
     back = (" <-- " + std::string(1, c)) + back;
-    c = /*m_rotors[2].getBack(*/m_rotors[2].bcript((Rotor::toOrder(c)), (/*r.getPosition() + */pos));
+    c = m_rotors[2].bcript((Rotor::toOrder(c)), (/*r.getPosition() + */pos));
     pos = Rotor::toOrder(m_rotors[2].current());
-//    }
 
     back = (" <-- " + std::string(1, c)) + back;
-    c = /*m_rotors[1].getBack(*/m_rotors[1].bcript((Rotor::toOrder(c)), pos);
+    c = m_rotors[1].bcript((Rotor::toOrder(c)), pos);
     pos = Rotor::toOrder(m_rotors[1].current());
 
     back = (" <-- " + std::string(1, c)) + back;
-    c = /*m_rotors[0].getBack(*/m_rotors[0].bcript((Rotor::toOrder(c)), pos);
+    c = m_rotors[0].bcript((Rotor::toOrder(c)), pos);
     pos = Rotor::toOrder(m_rotors[0].current());
 
     back = std::string(1, c) + back;
