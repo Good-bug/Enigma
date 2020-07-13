@@ -13,7 +13,8 @@ endif()
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-add_executable( Enigma main.cpp
+add_executable( Enigma WIN32
+                main.cpp
                 Rotor.cpp
                 Rotor.h
                 Reflector.cpp

@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
-#include <algorithm>
 
 Rotor::Rotor() {
     m_position = 0;
@@ -88,8 +87,10 @@ void Rotor::rotate(int step){
     auto const pos = (toOrder(current()) + step) % alphabet_size;
     auto const& it = std::find(m_rotor.begin(), m_rotor.end(), pos +'a');
 
-    char enc = std::distance(m_rotor.begin(), it);
-    m_position = enc;
+    m_position = std::distance(m_rotor.begin(), it);
+    if(m_mid && pos +'a' == 'z'){
+        rotate();
+    }
 
 }
 
@@ -99,7 +100,9 @@ void Rotor::rotateBack(int step){
         pos += alphabet_size;
 
     auto const& it = std::find(m_rotor.begin(), m_rotor.end(), pos + 'a');
+    m_position = std::distance(m_rotor.begin(), it);
 
-    int enc = std::distance(m_rotor.begin(), it);
-    m_position = enc;
+    if(m_mid && pos +'a' == 'z'){
+        rotateBack();
+    }
 }

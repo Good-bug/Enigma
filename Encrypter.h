@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Rotor.h"
 #include "Reflector.h"
+//#include <QDebug>
 
 class Encrypter {
 public:

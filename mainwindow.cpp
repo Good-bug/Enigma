@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
+//#include <iostream>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
         str_rotor.push_back(std::string("BDFHJLCPRTXVZNYEIWGAKMUSQO"));
 
     } catch (std::string ex){
-        std::cout << ex;
+        qDebug() << QString::fromStdString(ex);
     }
 
     std::string refl("AY BR CU DH EQ FS GL IP JX KN MO TZ VW");

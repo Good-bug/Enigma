@@ -72,39 +72,17 @@ char Encrypter::encrypt(char k) {
     if(!isalpha(k))
         return k;
 
-
-    std::cout << Rotor::toOrder(m_rotors[0].current()) << "\t";
-    std::cout << Rotor::toOrder(m_rotors[1].current()) << "\t";
-    std::cout << Rotor::toOrder(m_rotors[2].current()) << std::endl;
-
-
     char c = std::tolower(k);
-
     int pos = 0;
+
+    std::string ms;
     for(auto& r : m_rotors){
-        std::cout << c << " --> ";
+        ms += std::to_string(c) + " --> ";
         c = r.cript(Rotor::toOrder(c), pos);
         pos = Rotor::toOrder(r.current());
     }
-    std::cout << c << std::endl;
 
     c = m_reflector.bcript(Rotor::toOrder(c), pos);
-
-    auto back_get =[&](Rotor& r, auto const& tmp_c){
-        char tmp;
-
-        auto old_pos = r.getPosition();
-        r.setPosition(tmp_c);
-
-        if(std::isupper(c))
-            tmp = (int)(r.getPosition() + 'A');
-        else
-            tmp = (int)(r.getPosition() + 'a');
-
-        r.setPosition(old_pos);
-
-        return tmp;
-    };
 
     pos = 0;
     std::string back;
@@ -121,7 +99,6 @@ char Encrypter::encrypt(char k) {
     pos = Rotor::toOrder(m_rotors[0].current());
 
     back = std::string(1, c) + back;
-    std::cout << back << std::endl;
 
     rotate();
 
